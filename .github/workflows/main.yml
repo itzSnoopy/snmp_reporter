@@ -1,0 +1,15 @@
+on:
+  push:
+    branches:
+      - main
+      
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: publish
+    runs-on: [development]
+
+    steps:
+      - name: Pull new service
+        run: ssh ${{ secrets.PROD_SSH_USER }}@${{ secrets.PROD_SSH_HOST }} "cd ${{ secrets.PROD_REPO_DIR }} && git checkout main && git pull && exit"
